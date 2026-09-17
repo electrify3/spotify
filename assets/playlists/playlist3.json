@@ -1,0 +1,76 @@
+{
+    "id": "playlist3",
+    "name": "Late Night Drive",
+    "description": "Synthwave & retrowave for the midnight road",
+    "cover": "https://i.scdn.co/image/ab67616d0000b2731c04f4a7e2b3a8c1a5f64e2d",
+    "type": "Playlist",
+    "tracks": [
+        {
+            "id": "t12",
+            "title": "Midnight City",
+            "artists": [
+                "M83"
+            ],
+            "album": "Hurry Up, We're Dreaming",
+            "duration": 243,
+            "cover": "https://i.scdn.co/image/ab67616d0000b2731c04f4a7e2b3a8c1a5f64e2d",
+            "src": "assets/playlists/audio/midnight_city.mp3"
+        },
+        {
+            "id": "t13",
+            "title": "Outrun the Dark",
+            "artists": [
+                "Perturbator"
+            ],
+            "album": "Dangerous Days",
+            "duration": 312,
+            "cover": "https://i.scdn.co/image/ab67616d0000b2736a9e5533e56a39fcb09db2df",
+            "src": "assets/playlists/audio/outrun_the_dark.mp3"
+        },
+        {
+            "id": "t14",
+            "title": "Resonance",
+            "artists": [
+                "HOME"
+            ],
+            "album": "Odyssey",
+            "duration": 213,
+            "cover": "https://i.scdn.co/image/ab67616d0000b2734a93cfa86d491c8f4e4f1c1e",
+            "src": "assets/playlists/audio/resonance.mp3"
+        },
+        {
+            "id": "t15",
+            "title": "Stranger Things",
+            "artists": [
+                "Kyle Dixon",
+                "Michael Stein"
+            ],
+            "album": "Stranger Things OST",
+            "duration": 185,
+            "cover": "https://i.scdn.co/image/ab67616d0000b273fcf2e7b7c34c2d8e2f68e8a2",
+            "src": "assets/playlists/audio/stranger_things.mp3"
+        },
+        {
+            "id": "t16",
+            "title": "Kavinsky — Nightcall",
+            "artists": [
+                "Kavinsky"
+            ],
+            "album": "OutRun",
+            "duration": 261,
+            "cover": "https://i.scdn.co/image/ab67616d0000b273b35c7e0a15c53a2c8e1b3d2e",
+            "src": "assets/playlists/audio/nightcall.mp3"
+        },
+        {
+            "id": "t17",
+            "title": "Blinding Lights",
+            "artists": [
+                "The Weeknd"
+            ],
+            "album": "After Hours",
+            "duration": 200,
+            "cover": "https://i.scdn.co/image/ab67616d0000b2738863bc11d2aa12b54f5aeb21",
+            "src": "assets/playlists/audio/blinding_lights.mp3"
+        }
+    ]
+}

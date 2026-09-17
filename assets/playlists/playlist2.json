@@ -1,0 +1,66 @@
+{
+    "id": "playlist2",
+    "name": "Chill Lofi Beats",
+    "description": "Low tempo beats to study, code, and relax",
+    "cover": "https://i.scdn.co/image/ab67616d0000b2736f2f499b5d81e7b86b85b3e3",
+    "type": "Playlist",
+    "tracks": [
+        {
+            "id": "t7",
+            "title": "Tokyo Café",
+            "artists": [
+                "Jinsang"
+            ],
+            "album": "Solitude",
+            "duration": 183,
+            "cover": "https://i.scdn.co/image/ab67616d0000b2736f2f499b5d81e7b86b85b3e3",
+            "src": "assets/playlists/audio/tokyo_cafe.mp3"
+        },
+        {
+            "id": "t8",
+            "title": "Midnight Rain",
+            "artists": [
+                "Nujabes"
+            ],
+            "album": "Modal Soul",
+            "duration": 241,
+            "cover": "https://i.scdn.co/image/ab67616d0000b2739b7b4c1ba91deb2f6e63d85f",
+            "src": "assets/playlists/audio/midnight_rain.mp3"
+        },
+        {
+            "id": "t9",
+            "title": "Feather",
+            "artists": [
+                "Nujabes",
+                "CISE STARR"
+            ],
+            "album": "Modal Soul",
+            "duration": 286,
+            "cover": "https://i.scdn.co/image/ab67616d0000b2739b7b4c1ba91deb2f6e63d85f",
+            "src": "assets/playlists/audio/feather.mp3"
+        },
+        {
+            "id": "t10",
+            "title": "Blue Bossa",
+            "artists": [
+                "Idealism"
+            ],
+            "album": "Blue Hour",
+            "duration": 198,
+            "cover": "https://i.scdn.co/image/ab67616d0000b273c5649add07ed3720be9d5526",
+            "src": "assets/playlists/audio/blue_bossa.mp3"
+        },
+        {
+            "id": "t11",
+            "title": "Daydream",
+            "artists": [
+                "Philanthrope",
+                "tenno"
+            ],
+            "album": "Reminiscence",
+            "duration": 167,
+            "cover": "https://i.scdn.co/image/ab67616d0000b2731a8a4a0f92e15efb96db4f51",
+            "src": "assets/playlists/audio/daydream.mp3"
+        }
+    ]
+}

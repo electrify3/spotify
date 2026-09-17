@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify - Clone</title>
+    <meta name="description" content="A Spotify clone web player. Browse playlists, play music and enjoy your favorites.">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/utility.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <!-- Hidden audio engine -->
+    <audio id="audio-player" preload="metadata"></audio>
+
+    <nav class="nav-bar flex-center">
+        <div class="button-and-search flex-center">
+            <div class="logo">
+                <a href="/">
+                    <img src="assets/svgs/logo.svg" alt="logo image">
+                </a>
+            </div>
+            <div class="searchbox flex-center">
+                <button class="home-button" id="home-button" title="Home">
+                    <img class="svg-btn" src="assets/svgs/home.svg" alt="home icon">
+                </button>
+                <div class="search flex-center">
+                    <button id="search-btn" title="Search">
+                        <img class="svg-btn" src="assets/svgs/search.svg" alt="search icon">
+                    </button>
+                    <input type="search" name="search" id="song-search" class="song-search" placeholder="What do you want to Play?">
+                    <span></span>
+                    <button id="browse-btn" title="Browse">
+                        <img class="svg-btn" src="assets/svgs/browse.svg" alt="browse icon">
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="miscbox flex-center">
+            <button class="explore-premium" id="explore-premium-btn">
+                <span>Explore Premium</span>
+            </button>
+            <a href="/" class="install-spotify flex-center">
+                <img class="svg-btn-small" src="assets/svgs/download.svg" alt="download icon">
+                <span>Install App</span>
+            </a>
+            <button id="notification-btn" title="Notifications">
+                <img class="svg-btn-small" src="assets/svgs/notification.svg" alt="notification icon">
+            </button>
+            <button id="activity-btn" title="What's New">
+                <img class="svg-btn-small" src="assets/svgs/activity.svg" alt="activity icon">
+            </button>
+            <button class="user flex-center" id="user-btn" title="Profile">
+                <img src="assets/images/user.png" alt="user">
+            </button>
+        </div>
+    </nav>
+
+    <main class="padding-lr">
+        <!-- Re-expand tabs (shown when panels are collapsed) -->
+        <button class="reexpand-tab reexpand-left" id="reexpand-left" title="Expand Library">
+            <img class="svg-btn-small" src="assets/svgs/collapse_right.svg" alt="expand left panel">
+        </button>
+        <button class="reexpand-tab reexpand-right" id="reexpand-right" title="Expand Panel">
+            <img class="svg-btn-small" src="assets/svgs/collapse_left.svg" alt="expand right panel">
+        </button>
+
+        <div class="main">
+            <!-- ===== LEFT SECTION: LIBRARY ===== -->
+            <section class="control-section left-section padding-20">
+                <div class="left__section-nav">
+                    <div class="top color-primary flex-center">
+                        <div class="heading flex">
+                            <button class="collapse-btn flex-center" id="collapse-left-btn" title="Collapse Library">
+                                <img class="svg-btn-small" src="assets/svgs/collapse_left.svg" alt="collapse icon">
+                            </button>
+                            <p>Your Library</p>
+                        </div>
+                        <div class="top__buttons flex-center">
+                            <button class="create-btn flex-center color-primary text-bold" id="create-playlist-btn" title="Create playlist">
+                                <div class="add-icon flex-center">
+                                    <img class="svg-btn-small" src="assets/svgs/create.svg" alt="create icon">
+                                </div>
+                                <p>Create</p>
+                            </button>
+
+                            <button class="left-section-fs-btn" id="left-fs-btn" title="Expand Library">
+                                <img class="svg-btn-small" src="assets/svgs/expand.svg" alt="expand icon">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex gap-10">
+                        <span class="tag">Playlist</span>
+                        <span class="tag">Artists</span>
+                    </div>
+                </div>
+                <div class="left__section-content">
+                    <div class="left__section-searchbar flex-center">
+                        <button id="library-search-btn" title="Search in Your Library">
+                            <img class="svg-btn-small" src="assets/svgs/search.svg" alt="search icon">
+                        </button>
+
+                        <div class="recent color-dark-text flex-center">
+                            <p>Recents</p>
+                            <img class="svg-btn-small" src="assets/svgs/menu.svg" alt="menu icon">
+                        </div>
+                    </div>
+                    <!-- Dynamically populated by JS -->
+                    <div class="left__section-cards flex-center" id="library-cards">
+                        <!-- Liked Songs static card always present -->
+                        <div class="card flex-center" data-playlist-id="liked" id="liked-songs-card">
+                            <div class="left__section-card-icon flex-center">
+                                <img src="https://misc.scdn.co/liked-songs/liked-songs-640.jpg" alt="liked song">
+                                <div class="container flex-center card-play-btn-container">
+                                    <img class="svg-btn-small card-play-btn" src="assets/svgs/play.svg" alt="play icon">
+                                </div>
+                            </div>
+
+                            <div class="left__section-title">
+                                <p class="text-bold color-primary card-title">Liked Songs</p>
+                                <div class="left__section-title-data color-dark-text text-bold">
+                                    <span>
+                                        <img src="assets/svgs/pin.svg" alt="pin icon" class="small-pin">
+                                    </span>
+                                    <span>Playlist · </span>
+                                    <span id="liked-songs-count">0 Songs</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Playlist cards injected here by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== MID SECTION: FEED ===== -->
+            <section class="control-section mid-section" id="mid-section">
+                <div class="mid-nav flex-center" id="mid-nav">
+                    <div class="filters flex-center gap-10">
+                        <span class="tag active" data-filter="all">All</span>
+                        <span class="tag" data-filter="music">Music</span>
+                        <span class="tag" data-filter="playlist">Playlist</span>
+                    </div>
+                </div>
+
+                <div class="mid-section-content">
+                    <!-- Quick-play grid — dynamically populated -->
+                    <div class="mid-section-cards grid-2" id="feed-grid">
+                        <!-- Injected by JS -->
+                    </div>
+
+                    <!-- Song card rows — dynamically populated -->
+                    <div id="song-card-sections">
+                        <!-- Injected by JS -->
+                    </div>
+
+                    <footer>
+                        <hr>
+                        <div class="footer flex-space-between">
+                            <ul class="footer-part">
+                                <li>
+                                    <h3>Company</h3>
+                                </li>
+                                <li><a href="">About</a></li>
+                                <li><a href="">Jobs</a></li>
+                                <li><a href="">For the Record</a></li>
+                            </ul>
+
+                            <ul class="footer-part">
+                                <li>
+                                    <h3>Communities</h3>
+                                </li>
+                                <li><a href="">For Artists</a></li>
+                                <li><a href="">For Creators</a></li>
+                                <li><a href="">For Authors</a></li>
+                                <li><a href="">Developers</a></li>
+                                <li><a href="">Advertising</a></li>
+                                <li><a href="">Investors</a></li>
+                                <li><a href="">Vendors</a></li>
+                            </ul>
+
+
+                            <ul class="footer-part">
+                                <li>
+                                    <h3>Useful links</h3>
+                                </li>
+                                <li><a href="">Support</a></li>
+                                <li><a href="">Web Player</a></li>
+                                <li><a href="">Free Mobile App</a></li>
+                                <li><a href="">Popular by Country</a></li>
+                                <li><a href="">Top Song Lyrics</a></li>
+                                <li><a href="">Import your music</a></li>
+                            </ul>
+
+                            <ul class="footer-part">
+                                <li>
+                                    <h3>Spotify Plans</h3>
+                                </li>
+                                <li><a href="">Premium Standard</a></li>
+                                <li><a href="">Premium Platinum</a></li>
+                                <li><a href="">Premium Student</a></li>
+                                <li><a href="">Spotify Free</a></li>
+                            </ul>
+
+                            <ul class="footer-part social-unit">
+                                <li>
+                                    <h3>Social</h3>
+                                </li>
+                                <li>
+                                    <div class="social-icons flex">
+                                        <a href="">
+                                            <img class="svg-btn-small" src="assets/svgs/instagram.svg"
+                                                alt="instagram icon">
+                                        </a>
+                                        <a href="">
+                                            <img class="svg-btn-small" src="assets/svgs/x.svg" alt="twitter icon">
+                                        </a>
+                                        <a href="">
+                                            <img class="svg-btn-small" src="assets/svgs/facebook.svg"
+                                                alt="facebook icon">
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <hr>
+                        <div class="footer-bottom flex-space-between">
+                            <div class="footer-bottom-right flex gap-10">
+                                <a href="">Legal</a>
+                                <a href="">Privacy Center</a>
+                                <a href="">Privacy Policy</a>
+                                <a href="">Cookies</a>
+                                <a href="">About Ads</a>
+                            </div>
+                            <div class="footer-bottom-left">
+                                <p class="color-dark-text">© 2026 Spotify AB</p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </section>
+
+            <!-- ===== RIGHT SECTION: NOW PLAYING ===== -->
+            <section class="control-section right-section" id="right-section">
+                <div class="right__section-nav flex-space-between" id="right-section-nav">
+                    <div class="right-collapse-btn-parent flex-center gap-10">
+                        <button class="right-collapse-btn collapse-btn flex-center" id="collapse-right-btn" title="Collapse Panel">
+                            <img class="svg-btn-small" src="assets/svgs/collapse_right.svg" alt="collapse icon">
+                        </button>
+                        <h3 class="color-primary" id="right-panel-title">No track playing</h3>
+                    </div>
+                    <div class="right__section-nav-right flex-center gap-10">
+                        <button class="right-section-search-btn" id="right-three-dot-btn" title="More options">
+                            <img class="svg-btn-small" src="assets/svgs/three_dot.svg" alt="three dot icon">
+                        </button>
+                        <button class="right-section-fs-btn" id="right-fs-btn" title="Expand Panel">
+                            <img class="svg-btn-small" src="assets/svgs/expand.svg" alt="expand icon">
+                        </button>
+                    </div>
+                </div>
+
+                <div class="padding-20 flex-column gap-20" id="right-panel-body">
+
+                    <div class="right__section-card flex-center" id="right-section-card">
+                        <img src="https://misc.scdn.co/liked-songs/liked-songs-640.jpg" alt="song image" id="right-panel-cover">
+                        <div class="right__section-card-data">
+                            <h3 class="color-primary" id="right-panel-song-title">—</h3>
+                            <p class="color-dark-text text-bold" id="right-panel-artists">Select a track to play</p>
+                        </div>
+                    </div>
+
+                    <div class="credits" id="right-credits">
+                        <div class="credits-title flex-space-between">
+                            <h3 class="color-primary">Credits</h3>
+                            <a class="color-dark-text text-bold" href="#">Show all</a>
+                        </div>
+                        <div class="credits-list flex" id="credits-list">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+
+                    <div class="queue" id="right-queue">
+                        <div class="queue-title flex-space-between">
+                            <h3 class="color-primary">Next in queue</h3>
+                            <a class="color-dark-text text-bold" href="#">Show all</a>
+                        </div>
+                        <div class="queue-list flex" id="queue-list">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+                </div>
+
+
+            </section>
+        </div>
+
+        <!-- ===== PLAYER BAR ===== -->
+        <div class="player flex" id="player-bar">
+            <div class="song__info flex" id="player-song-info">
+                <span class="song__thumbnail" id="player-thumbnail">
+                    <img src="https://misc.scdn.co/liked-songs/liked-songs-640.jpg" alt="song thumbnail" id="player-thumb-img">
+                </span>
+                <div class="song__meta">
+                    <a class="song__meta-title color-primary" href="#" id="player-song-title">Select a song</a>
+                    <ul class="song__meta-artists flex text-small" id="player-artists">
+                        <!-- Injected by JS -->
+                    </ul>
+                </div>
+                <button class="add" id="add-to-liked-btn" title="Save to Your Liked Songs">
+                    <img class="svg-btn-small" src="assets/svgs/add.svg" alt="add icon" id="add-icon">
+                </button>
+            </div>
+
+            <div class="song__controls flex-center">
+                <div class="song__controls-buttons flex-center">
+                    <button class="shuffle" id="shuffle-btn" title="Enable Shuffle">
+                        <img class="svg-btn-small" src="assets/svgs/shuffle.svg" alt="shuffle icon">
+                    </button>
+
+                    <button class="previous" id="prev-btn" title="Previous">
+                        <img class="svg-btn-small" src="assets/svgs/previous.svg" alt="previous icon">
+                    </button>
+
+                    <button class="play" id="play-pause-btn" title="Play">
+                        <img class="svg-btn" src="assets/svgs/play.svg" alt="play icon" id="play-pause-icon">
+                    </button>
+
+                    <button class="next" id="next-btn" title="Next">
+                        <img class="svg-btn-small" src="assets/svgs/next.svg" alt="next icon">
+                    </button>
+
+                    <button class="loop" id="loop-btn" title="Enable Repeat">
+                        <img class="svg-btn-small" src="assets/svgs/loop.svg" alt="loop icon">
+                    </button>
+
+                </div>
+
+                <div class="song__progress flex color-dark-text text-small">
+                    <p id="current-time">0:00</p>
+                    <div class="progress-bar" id="progress-bar" role="progressbar" aria-label="Seek">
+                        <div class="current-progress" id="current-progress"></div>
+                        <div class="progress-thumb" id="progress-thumb"></div>
+                    </div>
+                    <p id="total-time">0:00</p>
+                </div>
+            </div>
+
+            <div class="song__volume__controls flex-center">
+                <button class="lyrics" id="lyrics-btn" title="Lyrics">
+                    <img class="svg-btn-small" src="assets/svgs/lyrics.svg" alt="">
+                </button>
+
+                <button class="queue-btn" id="queue-btn" title="Queue">
+                    <img class="svg-btn-small" src="assets/svgs/queue.svg" alt="queue icon">
+                </button>
+
+                <button class="device" id="device-btn" title="Connect to a device">
+                    <img class="svg-btn-small" src="assets/svgs/devices.svg" alt="devices icon">
+                </button>
+
+                <div class="volume__control flex-center">
+                    <button class="speaker" id="speaker-btn" title="Mute">
+                        <img class="svg-btn-small" src="assets/svgs/speaker.svg" alt="speaker icon" id="speaker-icon">
+                    </button>
+
+                    <div class="volume-bar" id="volume-bar" role="slider" aria-label="Volume">
+                        <div class="current-volume" id="current-volume"></div>
+                        <div class="volume-thumb" id="volume-thumb"></div>
+                    </div>
+
+                </div>
+
+                <button class="miniplayer" id="miniplayer-btn" title="Open miniplayer">
+                    <img class="svg-btn-small" src="assets/svgs/miniplayer.svg" alt="miniplayer icon">
+                </button>
+
+                <button class="fullscreen" id="fullscreen-btn" title="Open fullscreen">
+                    <img class="svg-btn-small" src="assets/svgs/fullscreen.svg" alt="fullscreen icon">
+                </button>
+            </div>
+        </div>
+    </main>
+
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
