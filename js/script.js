@@ -1,10 +1,59 @@
 'use strict';
 
-const PLAYLIST_FILES = [
-    'assets/playlists/playlist1.json',
-    'assets/playlists/playlist2.json',
-    'assets/playlists/playlist3.json',
+const IMG = {
+    suzume:     'https://i.scdn.co/image/ab67616d0000b273bc16d1eefe86b079c8805f8f',
+    radwimps:   'https://i.scdn.co/image/ab67616d0000e5ebf7374b42bee7c71b9649ac83',
+    yourname:   'https://i.scdn.co/image/ab67616d0000b2738863bc11d2aa12b54f5aeb21',
+    liked:      'https://misc.scdn.co/liked-songs/liked-songs-640.jpg',
+    lofi1:      'https://i.scdn.co/image/ab67616d0000b273ba5db46f4b838ef6027e6f96',
+    lofi2:      'https://i.scdn.co/image/ab67616d0000b2731de7b2ed09e6c2de58d2e459',
+    synthwave1: 'https://i.scdn.co/image/ab67616d0000b273ef6f1c01a2293a3e90bb30a9',
+    synthwave2: 'https://i.scdn.co/image/ab67616d0000b273c5649add07ed3720be9d5526',
+    afterhours: 'https://i.scdn.co/image/ab67616d0000b2738863bc11d2aa12b54f5aeb21',
+};
+
+const EMBEDDED_PLAYLISTS = [
+    {
+        id: 'playlist1', name: 'Anime Vibes',
+        description: 'The best anime soundtracks for your soul',
+        cover: IMG.suzume, type: 'Playlist',
+        tracks: [
+            { id: 't1',  title: 'Suzume',        artists: ['RADWIMPS', 'Toaka'], album: 'Suzume no Tojimari', duration: 228, cover: IMG.suzume,   src: 'assets/playlists/audio/suzume.mp3' },
+            { id: 't2',  title: 'Sparkle',        artists: ['RADWIMPS'],          album: 'Your Name',         duration: 296, cover: IMG.radwimps,  src: 'assets/playlists/audio/sparkle.mp3' },
+            { id: 't3',  title: 'Nandemonaiya',   artists: ['RADWIMPS'],          album: 'Your Name',         duration: 278, cover: IMG.radwimps,  src: 'assets/playlists/audio/nandemonaiya.mp3' },
+            { id: 't4',  title: 'Again',           artists: ['YUI'],               album: 'My Short Stories',  duration: 232, cover: IMG.yourname,  src: 'assets/playlists/audio/again.mp3' },
+            { id: 't5',  title: 'Gurenge',         artists: ['LiSA'],              album: 'LEO-NiNE',          duration: 225, cover: IMG.suzume,    src: 'assets/playlists/audio/gurenge.mp3' },
+            { id: 't6',  title: 'Homura',          artists: ['LiSA'],              album: 'Mugen Train',       duration: 257, cover: IMG.radwimps,  src: 'assets/playlists/audio/homura.mp3' },
+        ]
+    },
+    {
+        id: 'playlist2', name: 'Chill Lofi Beats',
+        description: 'Low tempo beats to study, code, and relax',
+        cover: IMG.lofi1, type: 'Playlist',
+        tracks: [
+            { id: 't7',  title: 'Tokyo Café',     artists: ['Jinsang'],              album: 'Solitude',     duration: 183, cover: IMG.lofi1,     src: 'assets/playlists/audio/tokyo_cafe.mp3' },
+            { id: 't8',  title: 'Midnight Rain',  artists: ['Nujabes'],              album: 'Modal Soul',   duration: 241, cover: IMG.lofi2,     src: 'assets/playlists/audio/midnight_rain.mp3' },
+            { id: 't9',  title: 'Feather',        artists: ['Nujabes', 'CISE STARR'],album: 'Modal Soul',   duration: 286, cover: IMG.lofi2,     src: 'assets/playlists/audio/feather.mp3' },
+            { id: 't10', title: 'Blue Bossa',     artists: ['Idealism'],             album: 'Blue Hour',    duration: 198, cover: IMG.lofi1,     src: 'assets/playlists/audio/blue_bossa.mp3' },
+            { id: 't11', title: 'Daydream',       artists: ['Philanthrope', 'tenno'],album: 'Reminiscence', duration: 167, cover: IMG.lofi2,     src: 'assets/playlists/audio/daydream.mp3' },
+        ]
+    },
+    {
+        id: 'playlist3', name: 'Late Night Drive',
+        description: 'Synthwave & retrowave for the midnight road',
+        cover: IMG.synthwave1, type: 'Playlist',
+        tracks: [
+            { id: 't12', title: 'Midnight City',        artists: ['M83'],                         album: "Hurry Up, We're Dreaming", duration: 243, cover: IMG.synthwave1, src: 'assets/playlists/audio/midnight_city.mp3' },
+            { id: 't13', title: 'Outrun the Dark',      artists: ['Perturbator'],                  album: 'Dangerous Days',          duration: 312, cover: IMG.synthwave2, src: 'assets/playlists/audio/outrun_the_dark.mp3' },
+            { id: 't14', title: 'Resonance',            artists: ['HOME'],                         album: 'Odyssey',                 duration: 213, cover: IMG.synthwave1, src: 'assets/playlists/audio/resonance.mp3' },
+            { id: 't15', title: 'Stranger Things Theme',artists: ['Kyle Dixon', 'Michael Stein'],  album: 'Stranger Things OST',     duration: 185, cover: IMG.synthwave2, src: 'assets/playlists/audio/stranger_things.mp3' },
+            { id: 't16', title: 'Nightcall',            artists: ['Kavinsky'],                     album: 'OutRun',                  duration: 261, cover: IMG.synthwave1, src: 'assets/playlists/audio/nightcall.mp3' },
+            { id: 't17', title: 'Blinding Lights',      artists: ['The Weeknd'],                   album: 'After Hours',             duration: 200, cover: IMG.afterhours,  src: 'assets/playlists/audio/blinding_lights.mp3' },
+        ]
+    }
 ];
+
+
 
 const state = {
     playlists: [],
@@ -87,18 +136,8 @@ function artistString(artists) {
 
 
 
-async function loadPlaylists() {
-    const results = await Promise.allSettled(
-        PLAYLIST_FILES.map(url => fetch(url).then(r => {
-            if (!r.ok) throw new Error(`Failed: ${url}`);
-            return r.json();
-        }))
-    );
-
-    state.playlists = results
-        .filter(r => r.status === 'fulfilled')
-        .map(r => r.value);
-
+function loadPlaylists() {
+    state.playlists = EMBEDDED_PLAYLISTS;
 
     state.allTracks = [];
     state.playlists.forEach(pl => {
@@ -132,7 +171,7 @@ function renderFeedGrid() {
 
         card.innerHTML = `
             <div class="image-container flex-center height-100">
-                <img class="reset height-100" src="${pl.cover}" alt="${pl.name}" onerror="this.src='https:
+                <img class="reset height-100" src="${pl.cover}" alt="${pl.name}" onerror="this.src='https://misc.scdn.co/liked-songs/liked-songs-640.jpg'">
             </div>
             <div class="text-and-button flex-space-between">
                 <h3 class="color-primary mid-card-title">${pl.name}</h3>
@@ -192,7 +231,7 @@ function createSongCard(track, globalIdx) {
 
     card.innerHTML = `
         <div class="song-big-image">
-            <img class="song-card-image" src="${track.cover}" alt="${track.title}" onerror="this.src='https:
+            <img class="song-card-image" src="${track.cover}" alt="${track.title}" onerror="this.src='https://misc.scdn.co/liked-songs/liked-songs-640.jpg'">
             <div class="flex-center mid-card-play-btn-container song-card-play-btn-container" data-track-index="${globalIdx}">
                 <img class="svg-btn invert-1" src="assets/svgs/play.svg" alt="play">
             </div>
@@ -231,7 +270,7 @@ function renderLibrary() {
 
         card.innerHTML = `
             <div class="left__section-card-icon flex-center">
-                <img src="${pl.cover}" alt="${pl.name}" onerror="this.src='https:
+                <img src="${pl.cover}" alt="${pl.name}" onerror="this.src='https://misc.scdn.co/liked-songs/liked-songs-640.jpg'">
                 <div class="container flex-center card-play-btn-container">
                     <img class="svg-btn-small card-play-btn" src="assets/svgs/play.svg" alt="play icon">
                 </div>
@@ -292,7 +331,7 @@ function renderRightPanel(track) {
         div.innerHTML = `
             <div class="queue-song-info flex gap-10">
                 <div class="queue-song-thumbnail">
-                    <img src="${t.cover}" alt="${t.title}" onerror="this.src='https:
+                    <img src="${t.cover}" alt="${t.title}" onerror="this.src='https://misc.scdn.co/liked-songs/liked-songs-640.jpg'">
                 </div>
                 <div class="queue-song-meta">
                     <a class="queue-song-meta-title color-primary" href="#">${t.title}</a>
@@ -697,11 +736,10 @@ rightSection.addEventListener('scroll', (e) => {
 audio.volume = state.volume;
 setVolumeWidth(state.volume * 100);
 
-async function init() {
-    await loadPlaylists();
+function init() {
+    loadPlaylists();
     renderFeed();
     renderLibrary();
-
 
     if (state.allTracks.length > 0) {
         loadTrack(0);

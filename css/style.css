@@ -147,15 +147,23 @@
 }
 
 .play {
-    width: 40px;
-    height: 40px;
-    border-radius: 50px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
 
-    background-color: var(--primary-color);
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.play:hover {
+    transform: scale(1.07);
+    background-color: #f0f0f0;
 }
 
 .play img {
-    filter: invert(1);
+    filter: invert(1); 
 }
 
 .song__progress {
@@ -817,9 +825,9 @@
     display: none;
 }
 
-/* ===== PLAYER ACTIVE STATES ===== */
 
-/* Shuffle / Loop active: green tint + glow */
+
+
 .shuffle.active img,
 .loop.active img {
     filter: invert(55%) sepia(80%) saturate(450%) hue-rotate(100deg) brightness(1.1);
@@ -830,7 +838,7 @@
     position: relative;
 }
 
-/* Green dot under active shuffle/loop */
+
 .shuffle.active::after,
 .loop.active::after {
     content: '';
@@ -844,7 +852,7 @@
     background-color: var(--accent-color);
 }
 
-/* ===== PROGRESS BAR — hover thumb ===== */
+
 
 .progress-bar {
     position: relative;
@@ -872,7 +880,7 @@
     background-color: var(--accent-color);
 }
 
-/* ===== VOLUME BAR — hover thumb ===== */
+
 
 .volume-bar {
     position: relative;
@@ -900,38 +908,38 @@
     background-color: var(--accent-color);
 }
 
-/* ===== NOW PLAYING HIGHLIGHT ===== */
 
-/* Mid quick-play card currently playing */
+
+
 .mid-section-card.is-playing {
     background-color: rgba(54, 192, 102, 0.18);
     box-shadow: inset 0 0 0 1px rgba(54, 192, 102, 0.3);
 }
 
-/* Song card currently playing */
+
 .song-card.is-playing {
     background-color: rgba(54, 192, 102, 0.12);
 }
 
-/* Library sidebar card currently playing */
+
 .card.is-playing .card-title {
     color: var(--accent-color);
 }
 
-/* ===== FILTER TAG ACTIVE ===== */
+
 .mid-section .tag.active {
     background-color: var(--primary-color);
     color: var(--background-color);
     font-weight: 700;
 }
 
-/* ===== MID-CARD PLAY BTN always show when card is playing ===== */
+
 .mid-section-card.is-playing .mid-card-play-btn-container,
 .song-card.is-playing .mid-card-play-btn-container {
     opacity: 1;
 }
 
-/* ===== QUEUE SONG HOVER ===== */
+
 .queue-song {
     padding: 6px;
     border-radius: 6px;
@@ -943,7 +951,7 @@
     background-color: rgba(255, 255, 255, 0.08);
 }
 
-/* ===== META DATA SONG CARD TEXT ===== */
+
 .meta-data-song-card {
     padding-top: 8px;
 }
@@ -956,7 +964,7 @@
     text-overflow: ellipsis;
 }
 
-/* ===== MID CARD TITLE TRUNCATE ===== */
+
 .mid-card-title {
     white-space: nowrap;
     overflow: hidden;
